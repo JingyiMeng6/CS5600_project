@@ -8,7 +8,7 @@ def main():
     print("\n")
     client_lib.instructions()
     client_id = strftime("%Y%m%d%H%M%S", gmtime())
-    file_version_map = {}
+    file_version_map = {} # local record of the latest file version number
 
     while True:
 
@@ -19,7 +19,11 @@ def main():
             print("Exiting <write> mode...\n")
 
         if "<read>" in client_input:
-            print("Entering <read> mode...\n")
+            while not client_lib.check_valid_input(client_input):
+                client_input = sys.stdin.readline()
+
+            filename = client_input.split()[1]  # get file name from the input
+            client_lib.handle_read(filename, file_version_map, client_id)
             print("Exiting <read> mode...\n")
 
         if "<list>" in client_input:
