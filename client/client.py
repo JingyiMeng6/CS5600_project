@@ -28,6 +28,9 @@ def main():
 
         if "<list>" in client_input:
             print("List all files\n")
+            client_socket = client_lib.create_socket()
+            client_lib.send_directory_service(client_socket,"", "", True)
+            client_socket.close()
 
         if "<instructions>" in client_input:
             client_lib.instructions()

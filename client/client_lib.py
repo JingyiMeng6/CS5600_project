@@ -106,7 +106,7 @@ def send_read(client_socket, fileserverIP_DS, fileserverPORT_DS, filename , RW, 
         client_socket.send(send_msg.encode())
         return False
     # if there is cache for this file, we will first compare the cache file version and the version on file server
-    cache_file = curr_path + "/client_cache" + client_id + "/" + filename_DS
+    cache_file = os.path.join(curr_path, "client_cache", client_id, filename_DS)
     if os.path.exists(cache_file) == True:
         # the message to send to file server
         send_msg = "CHECK_VERSION|" + filename
@@ -141,7 +141,7 @@ def send_read(client_socket, fileserverIP_DS, fileserverPORT_DS, filename , RW, 
 
 
 def cache(filename_DS, write_client_input, RW, client_id):
-    cache_file = curr_path + "/client_cache" + client_id + "/" + filename_DS
+    cache_file = os.path.join(curr_path, "client_cache", client_id, filename_DS)
 
     os.makedirs(os.path.dirname(cache_file), exist_ok=True)
 
