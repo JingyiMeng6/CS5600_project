@@ -11,9 +11,9 @@ serverSocket.listen(10)
 print ('DIRECTORY SERVICE is ready to receive...')
 
 def check_mappings(client_msg, list_files):
-
-	filename = client_msg.split('|')[0]
-	RW = client_msg.split('|')[1]
+	if not list_files:
+		filename = client_msg.split('|')[0]
+		RW = client_msg.split('|')[1]
 
 	# open the .csv file storing the mappings
 	with open("file_mappings.csv",'rt') as infile:        
@@ -21,7 +21,7 @@ def check_mappings(client_msg, list_files):
 		d_reader = csv.DictReader(infile, delimiter=',')    
 		# skip header of csv file
 		header = d_reader.fieldnames    	
-		file_row = ""
+		file_set = set()
 		for row in d_reader:
 			if list_files == False:
 				# use the dictionary reader to read the values of the cells at the current row
@@ -63,9 +63,12 @@ def check_mappings(client_msg, list_files):
 
 			else:
 				user_filename = row['user_filename']
-				# append filename to return string
-				file_row = file_row + user_filename +  "\n"		
+				# add filename to file set
+				file_set.add(user_filename)
 		if list_files == True:
+			file_row = ""
+			for i in file_set:
+				file_row = file_row + i + "\n"
 			return file_row		
 	# if file does not exist return None
 	return None 	
