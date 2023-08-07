@@ -22,6 +22,9 @@ def main():
             filename = client_input.split()[1]
             # handle write
             response = client_lib.handle_write(filename, client_id, file_version_map)
+            if response == False:
+                print("File unlock polling timeout...")
+                print("Try again later...")
             print("Exiting <write> mode...\n")
 
         if "<read>" in client_input:

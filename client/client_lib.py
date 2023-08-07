@@ -192,7 +192,8 @@ def grant_lock(client_id, filename_DS):
     print("You are granted the file...")
     return True
 
-
+# return true if granted lock successfully
+# return false if time-out while requesting lock from locking service
 def handle_write(filename, client_id, file_version_map):
     # create socket to directory service
     client_socket = create_socket()
