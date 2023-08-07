@@ -16,13 +16,19 @@ def main():
 
         if "<write>" in client_input:
             print("Entering <write> mode...\n")
+            while not client_lib.check_valid_input(client_input):
+                client_input = sys.stdin.readline()
+            # get the file name from input
+            filename = client_input.split()[1]
+            # handle write
+            response = client_lib.handle_write(filename, client_id, file_version_map)
             print("Exiting <write> mode...\n")
 
         if "<read>" in client_input:
             while not client_lib.check_valid_input(client_input):
                 client_input = sys.stdin.readline()
 
-            filename = client_input.split()[1]  # get file name from the input
+            filename = client_input.split()[1]
             client_lib.handle_read(filename, file_version_map, client_id)
             print("Exiting <read> mode...\n")
 
