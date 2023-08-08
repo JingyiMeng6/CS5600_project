@@ -14,13 +14,15 @@ def send_directory_service(client_socket, filename, RW, list_files):
     client_socket.connect((serverName,serverPort))
 
     if not list_files:
-        msg = filename + '|' + RW
+        msg = filename + '|' + RW # file1.c|r, file2|w
+        # print("The message sent to directory is " + msg)
         # send the string requesting file info to directory send_directory_service
         client_socket.send(msg.encode())
         reply = client_socket.recv(1024)
         reply = reply.decode()
     else:
         msg = "LIST"
+        print("The message sent to directory is " + msg)
         # send the string requesting file info to directory service
         client_socket.send(msg.encode())
         reply = client_socket.recv(1024)
@@ -163,8 +165,10 @@ def lock_unlock_file(client_socket, client_id, filename, lock_or_unlock):
 
     if lock_or_unlock == "lock":
         msg = client_id + "_1_:" + filename  # 1 = lock the file
+        #23453434_1_file1
     elif lock_or_unlock == "unlock":
         msg = client_id + "_2_:" + filename   # 2 = unlock the file
+        #23453434_2_file1
 
     # send the string requesting file info to directory service
     client_socket.send(msg.encode())
